@@ -1,31 +1,18 @@
 import React from 'react';
-import './App.css';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Quiz from './components/Quiz';
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   
   return (
-    <div className="App">
-      <nav className="Navbar">
-      <button className="biot"><img src={require('./logot.png')} alt="a" /></button> 
-      </nav>
-      <div className="grid-container">
-      <div className="grid-item">
-        <img src={require('./logot.png')} alt="Imagem 1" />
-        <button>Play</button>
-      </div>
-      <div className="grid-item">
-        <img src={require('./logot.png')} alt="Imagem 2" />
-        <button>Play</button>
-      </div>
-      <div className="grid-item">
-        <img src={require('./logot.png')} alt="Imagem 3" />
-        <button>Play</button>
-      </div>
-      <div className="grid-item">
-        <img src={require('./logot.png')} alt="Imagem 4" />
-        <button>Play</button>
-      </div>
-    </div>
+    <div>
+      <Navbar />
+      <Routes>
+          <Route path="/" element={<Home />} />  
+          <Route path="/quiz" element={<Quiz />} />  
+      </Routes>
     </div>
   );
 }
