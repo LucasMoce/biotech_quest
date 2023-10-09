@@ -4,22 +4,16 @@ import { Link, useMatch, useResolvedPath, } from "react-router-dom";
 const Home = () => {
   return (
     <div>
-        <div className="container">
-            <div className="grid-item">
-                <img src={require('./logot.png')} alt="Imagem 1" />
-                <button><Link to="/quiz" className="nav-link">Quiz</Link></button>
-            </div>
-            <div className="grid-item">
-                <img src={require('./logot.png')} alt="Imagem 2" />
-                <button>Play</button>
-            </div>
-            <div className="grid-item">
-                <img src={require('./logot.png')} alt="Imagem 3" />
-                <button>Play</button>
-            </div>
-            <div className="grid-item">
-                <img src={require('./logot.png')} alt="Imagem 4" />
-                <button>Play</button>
+        <div className="container text-center mt-5">
+            <div className='row'>
+                <div className="col me-5 position-relative border border-dark border-3" style={{backgroundColor:`darkred`, height:`200px`}}>
+                    <h2 className='text-light position-absolute top-50 start-50 translate-middle'>Quiz</h2>
+                    <button className='btn btn-light position-absolute bottom-0 start-50 translate-middle'><Link to="/quiz" className="nav-link">Iniciar</Link></button>
+                </div>
+                <div className="col me-5 position-relative  border border-dark border-3" style={{backgroundColor:`darkred`}}>
+                    <h2 className='text-light position-absolute top-50 start-50 translate-middle'>Sem nome</h2>
+                    <button className='btn btn-light position-absolute bottom-0 start-50 translate-middle'><Link to="/quiz" className="nav-link">Iniciar</Link></button>
+                </div>
             </div>
         </div>
     </div>
