@@ -27,6 +27,7 @@ const Quiz = () => {
 
       const circleRadius = 25;
       const encaixeRadius = 25;
+      const rectangleWidth = 300; // Largura do retângulo
 
       // Desenha os encaixes
       context.fillStyle = '#f0f0f0';
@@ -35,6 +36,10 @@ const Quiz = () => {
         context.arc(encaixe.x, encaixe.y, encaixeRadius, 0, 2 * Math.PI);
         context.fill();
       });
+
+      // Desenha o retângulo fino cinza claro
+      context.fillStyle = '#f0f0f0';
+      context.fillRect(circlePositions[0].x - circleRadius, circlePositions[0].y - 2, rectangleWidth, 5);
 
       // Desenha os círculos vermelhos arrastáveis
       context.fillStyle = '#ff0000';
@@ -97,12 +102,17 @@ const Quiz = () => {
       const mouseX = e.clientX - rect.left;
       const mouseY = e.clientY - rect.top;
 
-      // Atualiza a posição do círculo arrastável enquanto o mouse é movido
-      setCirclePositions((prevPositions) => {
-        const newPositions = [...prevPositions];
-        newPositions[dragging] = { x: mouseX, y: mouseY };
-        return newPositions;
-      });
+      // Calcula o deslocamento do círculo em relação à sua posição original
+      const offsetX = mouseX - circlePositions[dragging].x;
+      const offsetY = mouseY - circlePositions[dragging].y;
+
+      // Atualiza a posição de todos os círculos mantendo as posições relativas
+      setCirclePositions((prevPositions) =>
+        prevPositions.map((position, index) => ({
+          x: position.x + offsetX,
+          y: position.y + offsetY,
+        }))
+      );
     }
   };
 
