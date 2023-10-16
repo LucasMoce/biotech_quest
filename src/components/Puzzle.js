@@ -3,10 +3,10 @@ import React, { useState, useRef, useEffect } from 'react';
 const Quiz = () => {
   const canvasRef = useRef(null);
   const [circlePositions, setCirclePositions] = useState([
-    { x: 50, y: 50 },
-    { x: 150, y: 50 },
-    { x: 250, y: 50 },
-    { x: 350, y: 50 },
+    { x: 50, y: 50, label: 'A' },
+    { x: 150, y: 50, label: 'B' },
+    { x: 250, y: 50, label: 'C' },
+    { x: 350, y: 50, label: 'D' },
   ]);
 
   const [dragging, setDragging] = useState(false);
@@ -31,16 +31,16 @@ const Quiz = () => {
 
       const circleRadius = 25;
       const encaixeRadius = 25;
-      const rectangleWidth = 300; // Largura do retângulo
+      const rectangleWidth = 300;
 
       // Desenha os encaixes
-      encaixes.forEach((encaixe, index) => {
+      encaixes.forEach((encaixe) => {
         context.fillStyle = '#f0f0f0';
         context.beginPath();
         context.arc(encaixe.x, encaixe.y, encaixeRadius, 0, 2 * Math.PI);
         context.fill();
         context.fillStyle = '#000000';
-        context.font = 'bold 12px Arial'; // Ajuste a fonte e tamanho conforme necessário
+        context.font = 'bold 12px Arial';
         context.fillText(encaixe.label, encaixe.x - 5, encaixe.y + 5);
       });
 
@@ -49,11 +49,37 @@ const Quiz = () => {
       context.fillRect(circlePositions[0].x - circleRadius, circlePositions[0].y - 2, rectangleWidth, 5);
 
       // Desenha os círculos vermelhos arrastáveis
-      context.fillStyle = '#ff0000';
-      circlePositions.forEach((circlePosition, index) => {
+      circlePositions.forEach((circlePosition) => {
+        context.fillStyle = '#ff0000';
         context.beginPath();
         context.arc(circlePosition.x, circlePosition.y, circleRadius, 0, 2 * Math.PI);
         context.fill();
+        context.fillStyle = '#000000';
+        context.font = 'bold 12px Arial';
+        context.fillText(circlePosition.label, circlePosition.x - 5, circlePosition.y + 5);
+
+        // Verifica se o círculo está encaixado e se os labels coincidem
+        const encaixeCorrespondente = encaixes.find(
+          (encaixe) =>
+            encaixe.label === circlePosition.label &&
+            Math.abs(encaixe.x - circlePosition.x) < 5 &&
+            Math.abs(encaixe.y - circlePosition.y) < 5
+        );
+
+        if (encaixeCorrespondente) {
+          // Adiciona um contorno verde ao círculo
+          context.strokeStyle = '#00ff00';
+          context.lineWidth = 2;
+          context.beginPath();
+          context.arc(
+            circlePosition.x,
+            circlePosition.y,
+            circleRadius + 2, // Aumenta o raio para que o contorno não cubra o círculo vermelho
+            0,
+            2 * Math.PI
+          );
+          context.stroke();
+        }
       });
     };
 
@@ -102,7 +128,7 @@ const Quiz = () => {
           });
 
           return encaixeEncontrado
-            ? { x: encaixeEncontrado.x, y: encaixeEncontrado.y }
+            ? { ...circlePosition, x: encaixeEncontrado.x, y: encaixeEncontrado.y }
             : circlePosition;
         });
 
@@ -126,6 +152,7 @@ const Quiz = () => {
       // Atualiza a posição de todos os círculos mantendo as posições relativas
       setCirclePositions((prevPositions) =>
         prevPositions.map((position, index) => ({
+          ...position,
           x: position.x + offsetX,
           y: position.y + offsetY,
         }))
