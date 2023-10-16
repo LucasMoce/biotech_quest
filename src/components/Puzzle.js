@@ -5,6 +5,14 @@ const Quiz = () => {
   const [circlePosition, setCirclePosition] = useState({ x: 50, y: 50 });
   const [dragging, setDragging] = useState(false);
 
+  // Adicione quatro encaixes
+  const encaixes = [
+    { x: 100, y: 300 },
+    { x: 200, y: 300 },
+    { x: 300, y: 300 },
+    { x: 400, y: 300 },
+  ];
+
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
@@ -15,14 +23,13 @@ const Quiz = () => {
       const circleRadius = 25;
       const encaixeRadius = 25;
 
-      const encaixeX = window.innerWidth / 2;
-      const encaixeY = (window.innerHeight - 50) / 2 + 50;
-
-      // Desenha o círculo cinza (encaixe) no centro da tela
+      // Desenha os encaixes
       context.fillStyle = '#f0f0f0';
-      context.beginPath();
-      context.arc(encaixeX, encaixeY, encaixeRadius, 0, 2 * Math.PI);
-      context.fill();
+      encaixes.forEach((encaixe) => {
+        context.beginPath();
+        context.arc(encaixe.x, encaixe.y, encaixeRadius, 0, 2 * Math.PI);
+        context.fill();
+      });
 
       // Desenha o círculo vermelho arrastável
       context.fillStyle = '#ff0000';
@@ -51,19 +58,18 @@ const Quiz = () => {
   const handleMouseUp = () => {
     setDragging(false);
 
-    const encaixeX = window.innerWidth / 2;
-    const encaixeY = (window.innerHeight - 50) / 2 + 50;
-
-    const distance = Math.sqrt(
-      (circlePosition.x - encaixeX) ** 2 + (circlePosition.y - encaixeY) ** 2
-    );
-
-    // Define um limite de proximidade para "prender" o círculo ao encaixe
+    // Verifica a proximidade de cada encaixe
     const limiteProximidade = 30;
+    const encaixeEncontrado = encaixes.find((encaixe) => {
+      const distance = Math.sqrt(
+        (circlePosition.x - encaixe.x) ** 2 + (circlePosition.y - encaixe.y) ** 2
+      );
+      return distance < limiteProximidade;
+    });
 
-    if (distance < limiteProximidade) {
-      // Se estiver próximo o suficiente, ajusta a posição para o centro do encaixe
-      setCirclePosition({ x: encaixeX, y: encaixeY });
+    // Se um encaixe foi encontrado, ajusta a posição para o encaixe
+    if (encaixeEncontrado) {
+      setCirclePosition({ x: encaixeEncontrado.x, y: encaixeEncontrado.y });
     }
   };
 
@@ -79,7 +85,6 @@ const Quiz = () => {
 
   return (
     <div>
-      <h1>PUZZZZZZZLEEE</h1>
       <canvas
         ref={canvasRef}
         width={window.innerWidth}
