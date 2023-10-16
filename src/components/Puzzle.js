@@ -30,7 +30,7 @@ const Quiz = () => {
 
       // Desenha os encaixes
       context.fillStyle = '#f0f0f0';
-      encaixes.forEach((encaixe) => {
+      encaixes.forEach((encaixe, index) => {
         context.beginPath();
         context.arc(encaixe.x, encaixe.y, encaixeRadius, 0, 2 * Math.PI);
         context.fill();
@@ -38,7 +38,7 @@ const Quiz = () => {
 
       // Desenha os círculos vermelhos arrastáveis
       context.fillStyle = '#ff0000';
-      circlePositions.forEach((circlePosition) => {
+      circlePositions.forEach((circlePosition, index) => {
         context.beginPath();
         context.arc(circlePosition.x, circlePosition.y, circleRadius, 0, 2 * Math.PI);
         context.fill();
@@ -70,22 +70,19 @@ const Quiz = () => {
     if (dragging !== false) {
       // Verifica a proximidade de cada encaixe
       const limiteProximidade = 30;
-      const encaixeEncontrado = encaixes.find((encaixe) => {
+      const encaixeEncontrado = encaixes.find((encaixe, index) => {
         const distance = Math.sqrt(
           (circlePositions[dragging].x - encaixe.x) ** 2 +
             (circlePositions[dragging].y - encaixe.y) ** 2
         );
-        return distance < limiteProximidade;
+        return distance < limiteProximidade && !circleIsOccupying(index);
       });
 
       // Se um encaixe foi encontrado, ajusta a posição para o encaixe
       if (encaixeEncontrado) {
         setCirclePositions((prevPositions) => {
           const newPositions = [...prevPositions];
-          newPositions[dragging] = {
-            x: encaixeEncontrado.x,
-            y: encaixeEncontrado.y,
-          };
+          newPositions[dragging] = { x: encaixeEncontrado.x, y: encaixeEncontrado.y };
           return newPositions;
         });
       }
@@ -107,6 +104,15 @@ const Quiz = () => {
         return newPositions;
       });
     }
+  };
+
+  const circleIsOccupying = (encaixeIndex) => {
+    return circlePositions.some(
+      (position, index) =>
+        index !== dragging &&
+        position.x === encaixes[encaixeIndex].x &&
+        position.y === encaixes[encaixeIndex].y
+    );
   };
 
   return (
