@@ -12,14 +12,14 @@ const Quiz = () => {
   const [dragging, setDragging] = useState(false);
 
   const encaixes = [
-    { x: 50, y: 300 },
-    { x: 150, y: 300 },
-    { x: 250, y: 300 },
-    { x: 350, y: 300 },
-    { x: 450, y: 300 },
-    { x: 550, y: 300 },
-    { x: 650, y: 300 },
-    { x: 750, y: 300 },
+    { x: 50, y: 300, label: 'A' },
+    { x: 150, y: 300, label: 'B' },
+    { x: 250, y: 300, label: 'C' },
+    { x: 350, y: 300, label: 'D' },
+    { x: 450, y: 300, label: 'E' },
+    { x: 550, y: 300, label: 'F' },
+    { x: 650, y: 300, label: 'G' },
+    { x: 750, y: 300, label: 'H' },
   ];
 
   useEffect(() => {
@@ -34,11 +34,14 @@ const Quiz = () => {
       const rectangleWidth = 300; // Largura do retângulo
 
       // Desenha os encaixes
-      context.fillStyle = '#f0f0f0';
       encaixes.forEach((encaixe, index) => {
+        context.fillStyle = '#f0f0f0';
         context.beginPath();
         context.arc(encaixe.x, encaixe.y, encaixeRadius, 0, 2 * Math.PI);
         context.fill();
+        context.fillStyle = '#000000';
+        context.font = 'bold 12px Arial'; // Ajuste a fonte e tamanho conforme necessário
+        context.fillText(encaixe.label, encaixe.x - 5, encaixe.y + 5);
       });
 
       // Desenha o retângulo fino cinza claro
