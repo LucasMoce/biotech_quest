@@ -14,7 +14,7 @@ const Quiz = () => {
   const encaixes = [
     { x: 50, y: 300, label: 'G' },
     { x: 150, y: 300, label: 'T' },
-    { x: 250, y: 300, label: 'C' },
+    { x: 250, y: 300, label: 'A' },
     { x: 350, y: 300, label: 'A' },
     { x: 450, y: 300, label: 'G' },
     { x: 550, y: 300, label: 'T' },
