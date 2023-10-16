@@ -75,23 +75,20 @@ const Quiz = () => {
     if (dragging !== false) {
       // Verifica a proximidade de cada encaixe
       const limiteProximidade = 30;
-      const encaixeEncontrado = encaixes.find((encaixe, index) => {
-        const distance = Math.sqrt(
-          (circlePositions[dragging].x - encaixe.x) ** 2 +
-            (circlePositions[dragging].y - encaixe.y) ** 2
-        );
-        return distance < limiteProximidade && !circleIsOccupying(index);
+      const novasPosicoes = circlePositions.map((circlePosition, index) => {
+        const encaixeEncontrado = encaixes.find((encaixe, encaixeIndex) => {
+          const distance = Math.sqrt(
+            (circlePosition.x - encaixe.x) ** 2 + (circlePosition.y - encaixe.y) ** 2
+          );
+          return distance < limiteProximidade && !circleIsOccupying(encaixeIndex);
+        });
+
+        return encaixeEncontrado
+          ? { x: encaixeEncontrado.x, y: encaixeEncontrado.y }
+          : circlePosition;
       });
 
-      // Se um encaixe foi encontrado, ajusta a posição para o encaixe
-      if (encaixeEncontrado) {
-        setCirclePositions((prevPositions) => {
-          const newPositions = [...prevPositions];
-          newPositions[dragging] = { x: encaixeEncontrado.x, y: encaixeEncontrado.y };
-          return newPositions;
-        });
-      }
-
+      setCirclePositions(novasPosicoes);
       setDragging(false);
     }
   };
