@@ -12,10 +12,14 @@ const Quiz = () => {
   const [dragging, setDragging] = useState(false);
 
   const encaixes = [
-    { x: 100, y: 300 },
-    { x: 200, y: 300 },
-    { x: 300, y: 300 },
-    { x: 400, y: 300 },
+    { x: 50, y: 300 },
+    { x: 150, y: 300 },
+    { x: 250, y: 300 },
+    { x: 350, y: 300 },
+    { x: 450, y: 300 },
+    { x: 550, y: 300 },
+    { x: 650, y: 300 },
+    { x: 750, y: 300 },
   ];
 
   useEffect(() => {
@@ -73,22 +77,35 @@ const Quiz = () => {
 
   const handleMouseUp = () => {
     if (dragging !== false) {
-      // Verifica a proximidade de cada encaixe
-      const limiteProximidade = 30;
-      const novasPosicoes = circlePositions.map((circlePosition, index) => {
+      // Verifica se todos os círculos têm um local disponível para encaixe
+      const todosPodemEncaixar = circlePositions.every((circlePosition, index) => {
         const encaixeEncontrado = encaixes.find((encaixe, encaixeIndex) => {
           const distance = Math.sqrt(
             (circlePosition.x - encaixe.x) ** 2 + (circlePosition.y - encaixe.y) ** 2
           );
-          return distance < limiteProximidade && !circleIsOccupying(encaixeIndex);
+          return distance < 30 && !circleIsOccupying(encaixeIndex);
         });
-
-        return encaixeEncontrado
-          ? { x: encaixeEncontrado.x, y: encaixeEncontrado.y }
-          : circlePosition;
+        return encaixeEncontrado;
       });
 
-      setCirclePositions(novasPosicoes);
+      // Se todos podem encaixar, ajusta a posição para o encaixe
+      if (todosPodemEncaixar) {
+        const novasPosicoes = circlePositions.map((circlePosition, index) => {
+          const encaixeEncontrado = encaixes.find((encaixe, encaixeIndex) => {
+            const distance = Math.sqrt(
+              (circlePosition.x - encaixe.x) ** 2 + (circlePosition.y - encaixe.y) ** 2
+            );
+            return distance < 30 && !circleIsOccupying(encaixeIndex);
+          });
+
+          return encaixeEncontrado
+            ? { x: encaixeEncontrado.x, y: encaixeEncontrado.y }
+            : circlePosition;
+        });
+
+        setCirclePositions(novasPosicoes);
+      }
+
       setDragging(false);
     }
   };
