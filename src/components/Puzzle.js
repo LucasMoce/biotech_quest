@@ -2,10 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 
 const Quiz = () => {
   const canvasRef = useRef(null);
-  const [circlePosition, setCirclePosition] = useState({ x: 50, y: 50 });
+  const [circlePositions, setCirclePositions] = useState([
+    { x: 50, y: 50 },
+    { x: 150, y: 50 },
+    { x: 250, y: 50 },
+    { x: 350, y: 50 },
+  ]);
+
   const [dragging, setDragging] = useState(false);
 
-  // Adicione quatro encaixes
   const encaixes = [
     { x: 100, y: 300 },
     { x: 200, y: 300 },
@@ -31,55 +36,76 @@ const Quiz = () => {
         context.fill();
       });
 
-      // Desenha o círculo vermelho arrastável
+      // Desenha os círculos vermelhos arrastáveis
       context.fillStyle = '#ff0000';
-      context.beginPath();
-      context.arc(circlePosition.x, circlePosition.y, circleRadius, 0, 2 * Math.PI);
-      context.fill();
+      circlePositions.forEach((circlePosition) => {
+        context.beginPath();
+        context.arc(circlePosition.x, circlePosition.y, circleRadius, 0, 2 * Math.PI);
+        context.fill();
+      });
     };
 
     drawShapes();
-  }, [circlePosition]);
+  }, [circlePositions]);
 
   const handleMouseDown = (e) => {
     const rect = canvasRef.current.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
-    const distance = Math.sqrt(
-      (mouseX - circlePosition.x) ** 2 + (mouseY - circlePosition.y) ** 2
-    );
+    // Verifica qual círculo foi clicado
+    const clickedCircleIndex = circlePositions.findIndex((circlePosition) => {
+      const distance = Math.sqrt(
+        (mouseX - circlePosition.x) ** 2 + (mouseY - circlePosition.y) ** 2
+      );
+      return distance <= 25;
+    });
 
-    if (distance <= 25) {
-      setDragging(true);
+    if (clickedCircleIndex !== -1) {
+      setDragging(clickedCircleIndex);
     }
   };
 
   const handleMouseUp = () => {
-    setDragging(false);
+    if (dragging !== false) {
+      // Verifica a proximidade de cada encaixe
+      const limiteProximidade = 30;
+      const encaixeEncontrado = encaixes.find((encaixe) => {
+        const distance = Math.sqrt(
+          (circlePositions[dragging].x - encaixe.x) ** 2 +
+            (circlePositions[dragging].y - encaixe.y) ** 2
+        );
+        return distance < limiteProximidade;
+      });
 
-    // Verifica a proximidade de cada encaixe
-    const limiteProximidade = 30;
-    const encaixeEncontrado = encaixes.find((encaixe) => {
-      const distance = Math.sqrt(
-        (circlePosition.x - encaixe.x) ** 2 + (circlePosition.y - encaixe.y) ** 2
-      );
-      return distance < limiteProximidade;
-    });
+      // Se um encaixe foi encontrado, ajusta a posição para o encaixe
+      if (encaixeEncontrado) {
+        setCirclePositions((prevPositions) => {
+          const newPositions = [...prevPositions];
+          newPositions[dragging] = {
+            x: encaixeEncontrado.x,
+            y: encaixeEncontrado.y,
+          };
+          return newPositions;
+        });
+      }
 
-    // Se um encaixe foi encontrado, ajusta a posição para o encaixe
-    if (encaixeEncontrado) {
-      setCirclePosition({ x: encaixeEncontrado.x, y: encaixeEncontrado.y });
+      setDragging(false);
     }
   };
 
   const handleMouseMove = (e) => {
-    if (dragging) {
+    if (dragging !== false) {
       const rect = canvasRef.current.getBoundingClientRect();
       const mouseX = e.clientX - rect.left;
       const mouseY = e.clientY - rect.top;
 
-      setCirclePosition({ x: mouseX, y: mouseY });
+      // Atualiza a posição do círculo arrastável enquanto o mouse é movido
+      setCirclePositions((prevPositions) => {
+        const newPositions = [...prevPositions];
+        newPositions[dragging] = { x: mouseX, y: mouseY };
+        return newPositions;
+      });
     }
   };
 
