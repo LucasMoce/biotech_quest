@@ -12,14 +12,13 @@ const Quiz = () => {
   const [dragging, setDragging] = useState(false);
 
   const encaixes = [
-    { x: 50, y: 300, label: 'A' },
-    { x: 150, y: 300, label: 'A' },
-    { x: 250, y: 300, label: 'G' },
-    { x: 350, y: 300, label: 'T' },
-    { x: 450, y: 300, label: 'C' },
+    { x: 50, y: 300, label: 'G' },
+    { x: 150, y: 300, label: 'T' },
+    { x: 250, y: 300, label: 'C' },
+    { x: 350, y: 300, label: 'A' },
+    { x: 450, y: 300, label: 'G' },
     { x: 550, y: 300, label: 'T' },
     { x: 650, y: 300, label: 'C' },
-    { x: 750, y: 300, label: 'C' },
   ];
 
   useEffect(() => {
