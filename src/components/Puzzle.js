@@ -38,14 +38,13 @@ const Quiz = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-
+  
     const drawShapes = () => {
       context.clearRect(0, 0, canvas.width, canvas.height);
-
+  
       const circleRadius = 25;
       const encaixeRadius = 25;
-      const rectangleWidth = 300;
-
+  
       // Desenha os encaixes
       encaixes.forEach((encaixe) => {
         context.fillStyle = '#f0f0f0';
@@ -56,11 +55,15 @@ const Quiz = () => {
         context.font = 'bold 12px Arial';
         context.fillText(encaixe.label, encaixe.x - 5, encaixe.y + 5);
       });
-
-      // Desenha o retângulo fino cinza claro
-      context.fillStyle = '#f0f0f0';
-      context.fillRect(circleCadeias[0][0].x - circleRadius, circleCadeias[0][0].y - 2, rectangleWidth, 5);
-
+  
+      // Desenha os retângulos finos cinza claro para cada cadeia
+      circleCadeias.forEach((cadeia) => {
+        if (cadeia.length > 0) {
+          context.fillStyle = '#f0f0f0';
+          context.fillRect(cadeia[0].x - circleRadius, cadeia[0].y - 2, (cadeia.length - 1) * 100, 5);
+        }
+      });
+  
       // Desenha os círculos vermelhos arrastáveis
       circleCadeias.forEach((cadeia, cadeiaIndex) => {
         cadeia.forEach((circlePosition, circleIndex) => {
@@ -71,7 +74,7 @@ const Quiz = () => {
           context.fillStyle = '#000000';
           context.font = 'bold 12px Arial';
           context.fillText(circlePosition.label, circlePosition.x - 5, circlePosition.y + 5);
-
+  
           // Verifica se o círculo está encaixado e se os labels coincidem
           const encaixeCorrespondente = encaixes.find(
             (encaixe) =>
@@ -79,7 +82,7 @@ const Quiz = () => {
               Math.abs(encaixe.x - circlePosition.x) < 5 &&
               Math.abs(encaixe.y - circlePosition.y) < 5
           );
-
+  
           if (encaixeCorrespondente) {
             // Adiciona um contorno verde ao círculo
             context.strokeStyle = '#00ff00';
@@ -97,7 +100,7 @@ const Quiz = () => {
         });
       });
     };
-
+  
     drawShapes();
   }, [circleCadeias]);
 
