@@ -11,15 +11,15 @@ const Quiz = () => {
       { x: 350, y: 50, label: 'C' },
     ],
     [
-      { x: 50, y: 75, label: 'G' },
-      { x: 150, y: 75, label: 'C' },
-      { x: 250, y: 75, label: 'A' },
-      { x: 350, y: 75, label: 'A' },
+      { x: 50, y: 100, label: 'G' },
+      { x: 150, y: 100, label: 'C' },
+      { x: 250, y: 100, label: 'A' },
+      { x: 350, y: 100, label: 'A' },
     ],
     [
-      { x: 50, y: 100, label: 'G' },
-      { x: 150, y: 100, label: 'T' },
-      { x: 250, y: 100, label: 'A' },
+      { x: 50, y: 150, label: 'G' },
+      { x: 150, y: 150, label: 'T' },
+      { x: 250, y: 150, label: 'A' },
     ],
   ]);
 
@@ -35,27 +35,37 @@ const Quiz = () => {
     { x: 650, y: 300, label: 'C' },
   ];
 
+  const cadeiaEstatica = [
+    { x: 50, y: 400, label: 'C' },
+    { x: 150, y: 400, label: 'A' },
+    { x: 250, y: 400, label: 'T' },
+    { x: 350, y: 400, label: 'T' },
+    { x: 450, y: 400, label: 'C' },
+    { x: 550, y: 400, label: 'A' },
+    { x: 650, y: 400, label: 'G' },
+  ];
+
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-  
+
     const drawShapes = () => {
       context.clearRect(0, 0, canvas.width, canvas.height);
-  
+
       const circleRadius = 25;
       const encaixeRadius = 25;
-  
+
       // Desenha os encaixes
       encaixes.forEach((encaixe) => {
-        context.fillStyle = '#f0f0f0';
+        context.fillStyle = '#e0e0e0';
         context.beginPath();
         context.arc(encaixe.x, encaixe.y, encaixeRadius, 0, 2 * Math.PI);
         context.fill();
-        context.fillStyle = '#000000';
+        context.fillStyle = '#c2c2c2';
         context.font = 'bold 12px Arial';
         context.fillText(encaixe.label, encaixe.x - 5, encaixe.y + 5);
       });
-  
+
       // Desenha os retângulos finos cinza claro para cada cadeia
       circleCadeias.forEach((cadeia) => {
         if (cadeia.length > 0) {
@@ -63,7 +73,11 @@ const Quiz = () => {
           context.fillRect(cadeia[0].x - circleRadius, cadeia[0].y - 2, (cadeia.length - 1) * 100, 5);
         }
       });
-  
+
+      // Desenha a cadeia estática
+      context.fillStyle = '#f0f0f0';
+      context.fillRect(cadeiaEstatica[0].x - circleRadius, cadeiaEstatica[0].y - 2, (cadeiaEstatica.length - 1) * 100, 5);
+
       // Desenha os círculos vermelhos arrastáveis
       circleCadeias.forEach((cadeia, cadeiaIndex) => {
         cadeia.forEach((circlePosition, circleIndex) => {
@@ -74,7 +88,7 @@ const Quiz = () => {
           context.fillStyle = '#000000';
           context.font = 'bold 12px Arial';
           context.fillText(circlePosition.label, circlePosition.x - 5, circlePosition.y + 5);
-  
+
           // Verifica se o círculo está encaixado e se os labels coincidem
           const encaixeCorrespondente = encaixes.find(
             (encaixe) =>
@@ -82,7 +96,7 @@ const Quiz = () => {
               Math.abs(encaixe.x - circlePosition.x) < 5 &&
               Math.abs(encaixe.y - circlePosition.y) < 5
           );
-  
+
           if (encaixeCorrespondente) {
             // Adiciona um contorno verde ao círculo
             context.strokeStyle = '#00ff00';
@@ -99,8 +113,19 @@ const Quiz = () => {
           }
         });
       });
+
+      // Desenha os círculos da cadeia estática
+      cadeiaEstatica.forEach((circlePosition) => {
+        context.fillStyle = '#ff0000';
+        context.beginPath();
+        context.arc(circlePosition.x, circlePosition.y, circleRadius, 0, 2 * Math.PI);
+        context.fill();
+        context.fillStyle = '#000000';
+        context.font = 'bold 12px Arial';
+        context.fillText(circlePosition.label, circlePosition.x - 5, circlePosition.y + 5);
+      });
     };
-  
+
     drawShapes();
   }, [circleCadeias]);
 
