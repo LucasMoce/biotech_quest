@@ -81,7 +81,8 @@ const Quiz = () => {
       // Desenha os círculos vermelhos arrastáveis
       circleCadeias.forEach((cadeia, cadeiaIndex) => {
         cadeia.forEach((circlePosition, circleIndex) => {
-          context.fillStyle = '#ff0000';
+          const color = getColorForLabel(circlePosition.label);
+          context.fillStyle = color;
           context.beginPath();
           context.arc(circlePosition.x, circlePosition.y, circleRadius, 0, 2 * Math.PI);
           context.fill();
@@ -116,7 +117,8 @@ const Quiz = () => {
 
       // Desenha os círculos da cadeia estática
       cadeiaEstatica.forEach((circlePosition) => {
-        context.fillStyle = '#ff0000';
+        const color = getColorForLabel(circlePosition.label);
+        context.fillStyle = color;
         context.beginPath();
         context.arc(circlePosition.x, circlePosition.y, circleRadius, 0, 2 * Math.PI);
         context.fill();
@@ -124,6 +126,23 @@ const Quiz = () => {
         context.font = 'bold 12px Arial';
         context.fillText(circlePosition.label, circlePosition.x - 5, circlePosition.y + 5);
       });
+    };
+
+    const getColorForLabel = (label) => {
+      switch (label) {
+        case 'C':
+          return '#9ac8fc';
+        case 'G':
+          return '#cab1fc';
+        case 'A':
+          return '#fabc93';
+        case 'T':
+          return '#ffda91';
+        case 'U':
+          return '#fff491';
+        default:
+          return '#ff0000'; // Cor padrão se não houver correspondência
+      }
     };
 
     drawShapes();
@@ -134,44 +153,43 @@ const Quiz = () => {
   };
 
   const handleMouseUp = () => {
-  if (dragging.cadeiaIndex !== -1 && dragging.circleIndex !== -1) {
-    // Verifica se todos os círculos da mesma cadeia têm um local disponível para encaixe
-    const todosPodemEncaixar = circleCadeias[dragging.cadeiaIndex].every((circlePosition, circleIndex) => {
-      const encaixeEncontrado = encaixes.find((encaixe, encaixeIndex) => {
-        const distance = Math.sqrt(
-          (circlePosition.x - encaixe.x) ** 2 + (circlePosition.y - encaixe.y) ** 2
-        );
-        return distance < 30 && !circleIsOccupying(encaixeIndex, dragging.cadeiaIndex, circleIndex);
+    if (dragging.cadeiaIndex !== -1 && dragging.circleIndex !== -1) {
+      // Verifica se todos os círculos da mesma cadeia têm um local disponível para encaixe
+      const todosPodemEncaixar = circleCadeias[dragging.cadeiaIndex].every((circlePosition, circleIndex) => {
+        const encaixeEncontrado = encaixes.find((encaixe, encaixeIndex) => {
+          const distance = Math.sqrt(
+            (circlePosition.x - encaixe.x) ** 2 + (circlePosition.y - encaixe.y) ** 2
+          );
+          return distance < 30 && !circleIsOccupying(encaixeIndex, dragging.cadeiaIndex, circleIndex);
+        });
+        return encaixeEncontrado;
       });
-      return encaixeEncontrado;
-    });
 
-    // Se todos podem encaixar, ajusta a posição para o encaixe
-    if (todosPodemEncaixar) {
-      const novasPosicoes = circleCadeias.map((cadeia, cadeiaIndex) =>
-        cadeiaIndex === dragging.cadeiaIndex
-          ? cadeia.map((circlePosition, circleIndex) => {
-              const encaixeEncontrado = encaixes.find((encaixe, encaixeIndex) => {
-                const distance = Math.sqrt(
-                  (circlePosition.x - encaixe.x) ** 2 + (circlePosition.y - encaixe.y) ** 2
-                );
-                return distance < 30 && !circleIsOccupying(encaixeIndex, dragging.cadeiaIndex, circleIndex);
-              });
+      // Se todos podem encaixar, ajusta a posição para o encaixe
+      if (todosPodemEncaixar) {
+        const novasPosicoes = circleCadeias.map((cadeia, cadeiaIndex) =>
+          cadeiaIndex === dragging.cadeiaIndex
+            ? cadeia.map((circlePosition, circleIndex) => {
+                const encaixeEncontrado = encaixes.find((encaixe, encaixeIndex) => {
+                  const distance = Math.sqrt(
+                    (circlePosition.x - encaixe.x) ** 2 + (circlePosition.y - encaixe.y) ** 2
+                  );
+                  return distance < 30 && !circleIsOccupying(encaixeIndex, dragging.cadeiaIndex, circleIndex);
+                });
 
-              return encaixeEncontrado
-                ? { ...circlePosition, x: encaixeEncontrado.x, y: encaixeEncontrado.y }
-                : circlePosition;
-            })
-          : cadeia
-      );
+                return encaixeEncontrado
+                  ? { ...circlePosition, x: encaixeEncontrado.x, y: encaixeEncontrado.y }
+                  : circlePosition;
+              })
+            : cadeia
+        );
 
-      setCircleCadeias(novasPosicoes);
+        setCircleCadeias(novasPosicoes);
+      }
+
+      setDragging({ cadeiaIndex: -1, circleIndex: -1 });
     }
-
-    setDragging({ cadeiaIndex: -1, circleIndex: -1 });
-  }
-};
-
+  };
 
   const handleMouseMove = (cadeiaIndex, circleIndex, e) => {
     if (dragging.cadeiaIndex !== -1 && dragging.circleIndex !== -1) {
