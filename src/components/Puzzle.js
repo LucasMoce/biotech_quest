@@ -12,7 +12,7 @@ const Quiz = () => {
     ],
     [
       { x: 50, y: 100, label: 'G' },
-      { x: 150, y: 100, label: 'C' },
+      { x: 150, y: 100, label: 'T' },
       { x: 250, y: 100, label: 'A' },
       { x: 350, y: 100, label: 'A' },
     ],
@@ -45,6 +45,51 @@ const Quiz = () => {
     { x: 650, y: 400, label: 'G' },
   ];
 
+  const checkAnswer = () => {
+    // Filtra as cadeias que têm pelo menos um círculo encaixado
+    const cadeiasParaVerificar = circleCadeias.filter((cadeia) =>
+      cadeia.some((circlePosition) =>
+        encaixes.some(
+          (encaixe) =>
+            encaixe.label === circlePosition.label &&
+            Math.abs(encaixe.x - circlePosition.x) < 5 &&
+            Math.abs(encaixe.y - circlePosition.y) < 5
+        )
+      )
+    );
+  
+    // Verifica se todos os encaixes estão ocupados
+    const encaixesOcupados = encaixes.every((encaixe) =>
+      cadeiasParaVerificar.some((cadeia) =>
+        cadeia.some(
+          (circlePosition) =>
+            Math.abs(circlePosition.x - encaixe.x) < 5 && Math.abs(circlePosition.y - encaixe.y) < 5
+        )
+      )
+    );
+  
+    // Verifica se todos os círculos encaixados têm o rótulo correto
+    const circulosCorretos = cadeiasParaVerificar.every((cadeia) =>
+      cadeia.every((circlePosition) => {
+        const encaixeCorrespondente = encaixes.find(
+          (encaixe) =>
+            encaixe.label === circlePosition.label &&
+            Math.abs(encaixe.x - circlePosition.x) < 5 &&
+            Math.abs(encaixe.y - circlePosition.y) < 5
+        );
+        return encaixeCorrespondente !== undefined;
+      })
+    );
+  
+    // Verifica se todos os encaixes estão ocupados e os círculos encaixados têm o rótulo correto
+    if (encaixesOcupados && circulosCorretos) {
+      // Redireciona para o link quando a resposta estiver correta
+      window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+    } else {
+      // Mensagem ou ação para lidar com uma resposta incorreta (opcional)
+      console.log('Resposta incorreta. Tente novamente.');
+    }
+  };
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
@@ -231,6 +276,14 @@ const Quiz = () => {
 
   return (
     <div>
+      <button
+        className="btn btn-danger"
+        onClick={checkAnswer}
+        style={{ display: 'block', margin: '0 auto' }}
+      >
+        Verificar Resposta
+      </button>
+      
       <canvas
         ref={canvasRef}
         width={window.innerWidth}
@@ -257,6 +310,7 @@ const Quiz = () => {
           handleMouseMove(dragging.cadeiaIndex, dragging.circleIndex, e);
         }}
       />
+      
     </div>
   );
 };
