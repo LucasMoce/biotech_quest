@@ -17,8 +17,8 @@ const Navbar = () => {
             </Link> 
           </div>
           <div className='d-flex position-relative'>
-            <img src={trofeu} alt="" style={{width:`15%`}} />
-            <h3 className='mt-4 ms-2'>{pontos}</h3>
+            <img src={trofeu} alt="" style={{width:`10%`}} />
+            <h4 className='mt-3 ms-2'>{pontos} pontos</h4>
           </div>
         </div>
       </nav>

@@ -10,12 +10,12 @@ const Quiz = () => {
 
   const [quizData, setQuizData] = useState([
     {
-      question: "Qual o nome da primeira ovelhada clonada?",
-      options: ['Dolly', "Maria Chiquinha", "Renata", "Mariana Fonseca"],
-      answer: "Dolly"
+      question: "O que é a Biotecnologia ?",
+      options: ['O estudo das rochas e minerais', "O uso de  organismos vivos para criar produtos e processos úteis", "A Exploração exploração do espaço sideral", "A  construção de edifícios sustentáveis."],
+      answer: "O uso de  organismos vivos para criar produtos e processos úteis"
     },
     {
-      question: "Qual o nome da segunda ovelhada clonada?",
+      question: "Qual o nome da primeira ovelhada clonada?",
       options: ['Dolly', "Maria Chiquinha", "Renata", "Mariana Fonseca"],
       answer: "Dolly"
     },
@@ -44,7 +44,7 @@ const Quiz = () => {
   {
     return options.map((option, index) => (
       <>
-        <label htmlFor={option} className='mt-3'>
+        <label htmlFor={option} className='mt-3' style={{fontFamily:"'Brush Script MT', cursive;",fontSize:`2rem`}}>
         <input 
         type="radio"
         name="quizOption"
@@ -77,18 +77,18 @@ const Quiz = () => {
 
   return (
     <div>
-      <div className='container mt-5 pt-5 rounded border border-primary border-5 bg-light'style={{height:`600px`}}>
-        <h1 className='text-dark text-center'>Quiz da Biotecnologia</h1>
-        <div className='mx-auto' style={{width:`500px`}}>
+      <div className='container mt-5 pt-5 rounded border border-danger border-5 bg-light'style={{height:`600px`}}>
+        <p className='text-dark text-center' style={{fontSize:`30px`}}>Quiz da Biotecnologia</p>
+        <div className='mx-auto' style={{width:`80%`}}>
           {acabou ? 
             <>
-              <h3 className='text-center mt-5'>Sua pontuação: {pontos}/{quizData.length}</h3>
+              <h1 className='text-center mt-5'>Sua pontuação: {pontos}/{quizData.length}</h1>
             </>
           :
             <>
-              <h4 className='mt-4'>{quizData[atualQuestion].question}</h4>
+              <h1 className='mt-4 text-center'>{quizData[atualQuestion].question}</h1>
               {renderOptions(quizData[atualQuestion].options)}
-              <button className='btn btn-primary mt-5 translate-middle' style={{marginLeft:`50%`, marginRight:`50%`}} onClick={processAnswer}>Enviar</button>
+              <button className='btn btn-danger mt-5 translate-middle btn-lg' style={{marginLeft:`50%`, marginRight:`50%`}} onClick={processAnswer}>Enviar</button>
               <h4 className='text-center'>{atualQuestion +1}/{quizData.length}</h4>
             </>
           }         
