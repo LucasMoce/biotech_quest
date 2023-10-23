@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom'; // Importa o componente Link para navegação interna
 
-const Quiz = () => {
-  const canvasRef = useRef(null);
 
+const Puzzle1 = () => {
   const [circleCadeias, setCircleCadeias] = useState([
     [
       { x: 50, y: 50, label: 'A' },
@@ -23,8 +23,6 @@ const Quiz = () => {
     ],
   ]);
 
-  const [dragging, setDragging] = useState({ cadeiaIndex: -1, circleIndex: -1 });
-
   const encaixes = [
     { x: 50, y: 300, label: 'G' },
     { x: 150, y: 300, label: 'T' },
@@ -44,6 +42,12 @@ const Quiz = () => {
     { x: 550, y: 400, label: 'A' },
     { x: 650, y: 400, label: 'G' },
   ];
+  
+  const canvasRef = useRef(null);
+
+  const [dragging, setDragging] = useState({ cadeiaIndex: -1, circleIndex: -1 });
+
+  
 
   const checkAnswer = () => {
     // Filtra as cadeias que têm pelo menos um círculo encaixado
@@ -276,14 +280,20 @@ const Quiz = () => {
 
   return (
     <div>
-      <button
-        className="btn btn-danger"
-        onClick={checkAnswer}
-        style={{ display: 'block', margin: '0 auto' }}
-      >
-        Verificar Resposta
-      </button>
-      
+      <div className="justify-content-center mt-3 text-center">
+        <Link to="/puzzle" className="btn btn-primary mr-2">
+          Voltar à Seleção
+        </Link>
+
+        <button className="btn btn-danger mx-2" onClick={checkAnswer}>
+          <h4>Verificar Resposta</h4>
+        </button>
+
+        <Link to={`/puzzle/2`} className="btn btn-info ml-2">
+          Próximo Nível
+        </Link>
+      </div>
+
       <canvas
         ref={canvasRef}
         width={window.innerWidth}
@@ -315,4 +325,4 @@ const Quiz = () => {
   );
 };
 
-export default Quiz;
+export default Puzzle1;
