@@ -277,6 +277,7 @@ const Puzzle1 = () => {
 
   return (
     <div>
+      {/* Botões */}
       <div className="justify-content-center mt-3 text-center">
         <Link to="/puzzle" className="btn btn-primary mr-2">
           Voltar à Seleção
