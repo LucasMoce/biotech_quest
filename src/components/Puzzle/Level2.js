@@ -8,7 +8,6 @@ const Puzzle1 = () => {
       { x: 50, y: 50, label: 'A' },
       { x: 150, y: 50, label: 'G' },
       { x: 250, y: 50, label: 'T' },
-      { x: 350, y: 50, label: 'C' },
     ],
     [
       { x: 50, y: 100, label: 'G' },

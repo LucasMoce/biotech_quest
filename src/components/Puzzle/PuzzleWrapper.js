@@ -12,7 +12,6 @@ import Level8 from './Level8';
 import Level9 from './Level9';
 
 const PuzzleWrapper = () => {
-  const { level } = useParams();
 
   return (
     <Routes>
@@ -30,21 +29,5 @@ const PuzzleWrapper = () => {
   );
 };
 
-const PuzzleLevel = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<LevelSelection />} />
-      <Route path="/1" element={<Level1 />} />
-      <Route path="/2" element={<Level2 />} />
-      <Route path="/3" element={<Level3 />} />
-      <Route path="/4" element={<Level4 />} />
-      <Route path="/5" element={<Level5 />} />
-      <Route path="/6" element={<Level6 />} />
-      <Route path="/7" element={<Level7 />} />
-      <Route path="/8" element={<Level8 />} />
-      <Route path="/9" element={<Level9 />} />
-    </Routes>
-  );
-};
 
 export default PuzzleWrapper;
