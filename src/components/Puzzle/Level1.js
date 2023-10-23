@@ -47,7 +47,7 @@ const Puzzle1 = () => {
 
   const [dragging, setDragging] = useState({ cadeiaIndex: -1, circleIndex: -1 });
 
-  
+  const [respostaCorreta, setRespostaCorreta] = useState(null);
 
   const checkAnswer = () => {
     // Filtra as cadeias que têm pelo menos um círculo encaixado
@@ -87,12 +87,9 @@ const Puzzle1 = () => {
   
     // Verifica se todos os encaixes estão ocupados e os círculos encaixados têm o rótulo correto
     if (encaixesOcupados && circulosCorretos) {
-      // Redireciona para o link quando a resposta estiver correta
-      window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-    } else {
-      // Mensagem ou ação para lidar com uma resposta incorreta (opcional)
-      console.log('Resposta incorreta. Tente novamente.');
-    }
+      setRespostaCorreta(true);} 
+    else {
+      setRespostaCorreta(false);}
   };
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -293,6 +290,13 @@ const Puzzle1 = () => {
           Próximo Nível
         </Link>
       </div>
+
+      {/* Mensagem de sucesso ou falha */}
+      {respostaCorreta !== null && (
+        <div className={`alert ${respostaCorreta ? 'alert-success' : 'alert-danger'} text-center mt-3`} role="alert">
+          {respostaCorreta ? 'Resposta correta!' : 'Resposta incorreta. Tente novamente.'}
+        </div>
+      )}
 
       <canvas
         ref={canvasRef}
