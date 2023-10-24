@@ -5,43 +5,43 @@ import { Link } from 'react-router-dom'; // Importa o componente Link para naveg
 const Puzzle1 = () => {
   const [circleCadeias, setCircleCadeias] = useState([
     [
-      { x: 775, y: 50, label: 'A' },
-      { x: 875, y: 50, label: 'G' },
-      { x: 975, y: 50, label: 'T' },
-      { x: 1075, y: 50, label: 'C' },
+      { x: 775, y: 200, label: 'A' },
+      { x: 875, y: 200, label: 'G' },
+      { x: 975, y: 200, label: 'T' },
+      { x: 1075, y: 200, label: 'C' },
     ],
     [
-      { x: 825, y: 100, label: 'G' },
-      { x: 925, y: 100, label: 'T' },
-      { x: 1025, y: 100, label: 'A' },
+      { x: 825, y: 250, label: 'G' },
+      { x: 925, y: 250, label: 'T' },
+      { x: 1025, y: 250, label: 'A' },
     ],
     [
-      { x: 775, y: 150, label: 'G' },
-      { x: 875, y: 150, label: 'T' },
-      { x: 975, y: 150, label: 'A' },
-      { x: 1075, y: 150, label: 'A' },
+      { x: 775, y: 300, label: 'G' },
+      { x: 875, y: 300, label: 'T' },
+      { x: 975, y: 300, label: 'A' },
+      { x: 1075, y: 300, label: 'A' },
     ],
     
   ]);
 
   const encaixes = [
-    { x: 625, y: 300, label: 'G' },
-    { x: 725, y: 300, label: 'T' },
-    { x: 825, y: 300, label: 'A' },
-    { x: 925, y: 300, label: 'A' },
-    { x: 1025, y: 300, label: 'G' },
-    { x: 1125, y: 300, label: 'T' },
-    { x: 1225, y: 300, label: 'C' },
+    { x: 625, y: 550, label: 'G' },
+    { x: 725, y: 550, label: 'T' },
+    { x: 825, y: 550, label: 'A' },
+    { x: 925, y: 550, label: 'A' },
+    { x: 1025, y: 550, label: 'G' },
+    { x: 1125, y: 550, label: 'T' },
+    { x: 1225, y: 550, label: 'C' },
   ];
 
   const cadeiaEstatica = [
-    { x: 625, y: 400, label: 'C' },
-    { x: 725, y: 400, label: 'A' },
-    { x: 825, y: 400, label: 'T' },
-    { x: 925, y: 400, label: 'T' },
-    { x: 1025, y: 400, label: 'C' },
-    { x: 1125, y: 400, label: 'A' },
-    { x: 1225, y: 400, label: 'G' },
+    { x: 625, y: 650, label: 'C' },
+    { x: 725, y: 650, label: 'A' },
+    { x: 825, y: 650, label: 'T' },
+    { x: 925, y: 650, label: 'T' },
+    { x: 1025, y: 650, label: 'C' },
+    { x: 1125, y: 650, label: 'A' },
+    { x: 1225, y: 650, label: 'G' },
   ];
   
   const canvasRef = useRef(null);
@@ -122,7 +122,7 @@ const Puzzle1 = () => {
       });
 
       // Desenha a cadeia estática
-      context.fillStyle = '#f0f0f0';
+      context.fillStyle = '#d4d4d4';
       context.fillRect(cadeiaEstatica[0].x - circleRadius, cadeiaEstatica[0].y - 2, (cadeiaEstatica.length - 1) * 100, 5);
 
       // Desenha os círculos vermelhos arrastáveis
