@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, useParams } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import LevelSelection from './LevelSelection';
 import Level1 from './Level1';
 import Level2 from './Level2';
