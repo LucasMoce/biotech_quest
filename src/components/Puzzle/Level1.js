@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom'; // Importa o componente Link para naveg
 const Puzzle1 = () => {
   const [circleCadeias, setCircleCadeias] = useState([
     [
-      { x: 775, y: 200, label: 'A' },
-      { x: 875, y: 200, label: 'G' },
-      { x: 975, y: 200, label: 'T' },
-      { x: 1075, y: 200, label: 'C' },
+      { x: 775, y: 175, label: 'A' },
+      { x: 875, y: 175, label: 'G' },
+      { x: 975, y: 175, label: 'T' },
+      { x: 1075, y: 175, label: 'C' },
     ],
     [
       { x: 825, y: 250, label: 'G' },
@@ -16,10 +16,10 @@ const Puzzle1 = () => {
       { x: 1025, y: 250, label: 'A' },
     ],
     [
-      { x: 775, y: 300, label: 'G' },
-      { x: 875, y: 300, label: 'T' },
-      { x: 975, y: 300, label: 'A' },
-      { x: 1075, y: 300, label: 'A' },
+      { x: 775, y: 325, label: 'G' },
+      { x: 875, y: 325, label: 'T' },
+      { x: 975, y: 325, label: 'A' },
+      { x: 1075, y: 325, label: 'A' },
     ],
     
   ]);
@@ -43,6 +43,14 @@ const Puzzle1 = () => {
     { x: 1125, y: 650, label: 'A' },
     { x: 1225, y: 650, label: 'G' },
   ];
+  
+  const cor = {
+    linha: '#d4d4d4',
+    letra: '#000000',
+    resposta: '#fc3a3a',
+    encaixe: '#d4d4d4',
+  }
+  const nextLvl = `/puzzle/2`
   
   const canvasRef = useRef(null);
 
@@ -104,11 +112,11 @@ const Puzzle1 = () => {
 
       // Desenha os encaixes
       encaixes.forEach((encaixe) => {
-        context.fillStyle = '#d4d4d4';
+        context.fillStyle = cor.encaixe;
         context.beginPath();
         context.arc(encaixe.x, encaixe.y, encaixeRadius, 0, 2 * Math.PI);
         context.fill();
-        context.fillStyle = '#c2c2c2';
+        context.fillStyle = cor.resposta;
         context.font = 'bold 12px Arial';
         context.fillText(encaixe.label, encaixe.x - 5, encaixe.y + 5);
       });
@@ -116,13 +124,13 @@ const Puzzle1 = () => {
       // Desenha os retângulos finos cinza claro para cada cadeia
       circleCadeias.forEach((cadeia) => {
         if (cadeia.length > 0) {
-          context.fillStyle = '#d4d4d4';
+          context.fillStyle = cor.linha;
           context.fillRect(cadeia[0].x - circleRadius, cadeia[0].y - 2, (cadeia.length - 1) * 100, 5);
         }
       });
 
-      // Desenha a cadeia estática
-      context.fillStyle = '#d4d4d4';
+      // Desenha a linha da cadeia estática
+      context.fillStyle = cor.linha;
       context.fillRect(cadeiaEstatica[0].x - circleRadius, cadeiaEstatica[0].y - 2, (cadeiaEstatica.length - 1) * 100, 5);
 
       // Desenha os círculos vermelhos arrastáveis
@@ -133,7 +141,7 @@ const Puzzle1 = () => {
           context.beginPath();
           context.arc(circlePosition.x, circlePosition.y, circleRadius, 0, 2 * Math.PI);
           context.fill();
-          context.fillStyle = '#000000';
+          context.fillStyle = cor.letra;
           context.font = 'bold 12px Arial';
           context.fillText(circlePosition.label, circlePosition.x - 5, circlePosition.y + 5);
 
@@ -169,7 +177,7 @@ const Puzzle1 = () => {
         context.beginPath();
         context.arc(circlePosition.x, circlePosition.y, circleRadius, 0, 2 * Math.PI);
         context.fill();
-        context.fillStyle = '#000000';
+        context.fillStyle = cor.letra;
         context.font = 'bold 12px Arial';
         context.fillText(circlePosition.label, circlePosition.x - 5, circlePosition.y + 5);
       });
@@ -288,7 +296,7 @@ const Puzzle1 = () => {
           <h4>Verificar Resposta</h4>
         </button>
 
-        <Link to={`/puzzle/2`} className="btn btn-info ml-2">
+        <Link to={nextLvl} className="btn btn-info ml-2">
           Próximo Nível
         </Link>
       </div>

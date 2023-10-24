@@ -62,6 +62,7 @@ const Puzzle1 = () => {
     resposta: '#fc3a3a',
     encaixe: '#d4d4d4',
   }
+  const nextLvl = `/puzzle/3`
   
   const canvasRef = useRef(null);
 
@@ -307,7 +308,7 @@ const Puzzle1 = () => {
           <h4>Verificar Resposta</h4>
         </button>
 
-        <Link to={`/puzzle/3`} className="btn btn-info ml-2">
+        <Link to={nextLvl} className="btn btn-info ml-2">
           Próximo Nível
         </Link>
       </div>

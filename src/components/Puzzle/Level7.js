@@ -5,49 +5,59 @@ import { Link } from 'react-router-dom'; // Importa o componente Link para naveg
 const Puzzle1 = () => {
   const [circleCadeias, setCircleCadeias] = useState([
     [
-      { x: 50, y: 50, label: 'A' },
-      { x: 150, y: 50, label: 'G' },
-      { x: 250, y: 50, label: 'T' },
-      { x: 350, y: 50, label: 'C' },
+      { x: 875, y: 100, label: 'X' },
+      { x: 975, y: 100, label: 'X' },
     ],
     [
-      { x: 50, y: 100, label: 'G' },
-      { x: 150, y: 100, label: 'T' },
-      { x: 250, y: 100, label: 'A' },
-      { x: 350, y: 100, label: 'A' },
+      { x: 775, y: 175, label: 'X' },
+      { x: 875, y: 175, label: 'X' },
+      { x: 975, y: 175, label: 'X' },
+      { x: 1075, y: 175, label: 'X' },
     ],
     [
-      { x: 50, y: 150, label: 'G' },
-      { x: 150, y: 150, label: 'T' },
-      { x: 250, y: 150, label: 'A' },
+      { x: 825, y: 400, label: 'X' },
+      { x: 925, y: 400, label: 'X' },
+      { x: 1025, y: 400, label: 'X' },
     ],
   ]);
 
   const encaixes = [
-    { x: 50, y: 300, label: 'G' },
-    { x: 150, y: 300, label: 'T' },
-    { x: 250, y: 300, label: 'A' },
-    { x: 350, y: 300, label: 'A' },
-    { x: 450, y: 300, label: 'G' },
-    { x: 550, y: 300, label: 'T' },
-    { x: 650, y: 300, label: 'C' },
+    { x: 525, y: 550, label: 'X' },
+    { x: 625, y: 550, label: 'X' },
+    { x: 725, y: 550, label: 'X' },
+    { x: 825, y: 550, label: 'X' },
+    { x: 925, y: 550, label: 'X' },
+    { x: 1025, y: 550, label: 'X' },
+    { x: 1125, y: 550, label: 'X' },
+    { x: 1225, y: 550, label: 'X' },
+    { x: 1325, y: 550, label: 'X' },
   ];
 
   const cadeiaEstatica = [
-    { x: 50, y: 400, label: 'C' },
-    { x: 150, y: 400, label: 'A' },
-    { x: 250, y: 400, label: 'T' },
-    { x: 350, y: 400, label: 'T' },
-    { x: 450, y: 400, label: 'C' },
-    { x: 550, y: 400, label: 'A' },
-    { x: 650, y: 400, label: 'G' },
+    { x: 525, y: 650, label: 'A' },
+    { x: 625, y: 650, label: 'C' },
+    { x: 725, y: 650, label: 'T' },
+    { x: 825, y: 650, label: 'G' },
+    { x: 925, y: 650, label: 'A' },
+    { x: 1025, y: 650, label: 'C' },
+    { x: 1125, y: 650, label: 'T' },
+    { x: 1225, y: 650, label: 'G' },
+    { x: 1325, y: 650, label: 'A' },
   ];
+
+  const cor = {
+    linha: '#d4d4d4',
+    letra: '#000000',
+    resposta: '#fc3a3a',
+    encaixe: '#d4d4d4',
+  }
+  const nextLvl = `/puzzle/8`
   
   const canvasRef = useRef(null);
 
   const [dragging, setDragging] = useState({ cadeiaIndex: -1, circleIndex: -1 });
 
-  
+  const [respostaCorreta, setRespostaCorreta] = useState(null);
 
   const checkAnswer = () => {
     // Filtra as cadeias que têm pelo menos um círculo encaixado
@@ -87,12 +97,9 @@ const Puzzle1 = () => {
   
     // Verifica se todos os encaixes estão ocupados e os círculos encaixados têm o rótulo correto
     if (encaixesOcupados && circulosCorretos) {
-      // Redireciona para o link quando a resposta estiver correta
-      window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-    } else {
-      // Mensagem ou ação para lidar com uma resposta incorreta (opcional)
-      console.log('Resposta incorreta. Tente novamente.');
-    }
+      setRespostaCorreta(true);} 
+    else {
+      setRespostaCorreta(false);}
   };
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -106,11 +113,11 @@ const Puzzle1 = () => {
 
       // Desenha os encaixes
       encaixes.forEach((encaixe) => {
-        context.fillStyle = '#e0e0e0';
+        context.fillStyle = cor.encaixe;
         context.beginPath();
         context.arc(encaixe.x, encaixe.y, encaixeRadius, 0, 2 * Math.PI);
         context.fill();
-        context.fillStyle = '#c2c2c2';
+        context.fillStyle = cor.resposta;
         context.font = 'bold 12px Arial';
         context.fillText(encaixe.label, encaixe.x - 5, encaixe.y + 5);
       });
@@ -118,13 +125,13 @@ const Puzzle1 = () => {
       // Desenha os retângulos finos cinza claro para cada cadeia
       circleCadeias.forEach((cadeia) => {
         if (cadeia.length > 0) {
-          context.fillStyle = '#f0f0f0';
+          context.fillStyle = cor.linha;
           context.fillRect(cadeia[0].x - circleRadius, cadeia[0].y - 2, (cadeia.length - 1) * 100, 5);
         }
       });
 
-      // Desenha a cadeia estática
-      context.fillStyle = '#f0f0f0';
+      // Desenha a linha da cadeia estática
+      context.fillStyle = cor.linha;
       context.fillRect(cadeiaEstatica[0].x - circleRadius, cadeiaEstatica[0].y - 2, (cadeiaEstatica.length - 1) * 100, 5);
 
       // Desenha os círculos vermelhos arrastáveis
@@ -135,7 +142,7 @@ const Puzzle1 = () => {
           context.beginPath();
           context.arc(circlePosition.x, circlePosition.y, circleRadius, 0, 2 * Math.PI);
           context.fill();
-          context.fillStyle = '#000000';
+          context.fillStyle = cor.letra;
           context.font = 'bold 12px Arial';
           context.fillText(circlePosition.label, circlePosition.x - 5, circlePosition.y + 5);
 
@@ -171,7 +178,7 @@ const Puzzle1 = () => {
         context.beginPath();
         context.arc(circlePosition.x, circlePosition.y, circleRadius, 0, 2 * Math.PI);
         context.fill();
-        context.fillStyle = '#000000';
+        context.fillStyle = cor.letra;
         context.font = 'bold 12px Arial';
         context.fillText(circlePosition.label, circlePosition.x - 5, circlePosition.y + 5);
       });
@@ -280,6 +287,7 @@ const Puzzle1 = () => {
 
   return (
     <div>
+      {/* Botões */}
       <div className="justify-content-center mt-3 text-center">
         <Link to="/puzzle" className="btn btn-primary mr-2">
           Voltar à Seleção
@@ -289,10 +297,17 @@ const Puzzle1 = () => {
           <h4>Verificar Resposta</h4>
         </button>
 
-        <Link to={`/puzzle/2`} className="btn btn-info ml-2">
+        <Link to={nextLvl} className="btn btn-info ml-2">
           Próximo Nível
         </Link>
       </div>
+
+      {/* Mensagem de sucesso ou falha */}
+      {respostaCorreta !== null && (
+        <div className={`alert ${respostaCorreta ? 'alert-success' : 'alert-danger'} text-center mt-3`} role="alert">
+          {respostaCorreta ? 'Resposta correta!' : 'Resposta incorreta. Tente novamente.'}
+        </div>
+      )}
 
       <canvas
         ref={canvasRef}
