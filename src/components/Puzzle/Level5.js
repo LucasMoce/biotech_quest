@@ -33,17 +33,18 @@ const Puzzle1 = () => {
     { x: 1325, y: 550, label: 'X' },
   ];
 
-  const cadeiaEstatica = [
-    { x: 525, y: 650, label: 'A' },
-    { x: 625, y: 650, label: 'C' },
-    { x: 725, y: 650, label: 'T' },
-    { x: 825, y: 650, label: 'G' },
-    { x: 925, y: 650, label: 'A' },
-    { x: 1025, y: 650, label: 'C' },
-    { x: 1125, y: 650, label: 'T' },
-    { x: 1225, y: 650, label: 'G' },
-    { x: 1325, y: 650, label: 'A' },
-  ];
+  const complementPairs = {
+    'A': 'T',
+    'T': 'A',
+    'C': 'G',
+    'G': 'C'
+  };
+  
+  const cadeiaEstatica = encaixes.map(item => ({
+    x: item.x,
+    y: item.y + 100,
+    label: complementPairs[item.label]
+  }));
 
   const cor = {
     linha: '#d4d4d4',
