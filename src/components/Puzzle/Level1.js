@@ -50,7 +50,7 @@ const Puzzle1 = () => {
   const cor = {
     linha: '#d4d4d4',
     letra: '#000000',
-    resposta: '#fc3a3a',
+    resposta: '#d4d4d4',
     encaixe: '#d4d4d4',
   }
   const nextLvl = `/puzzle/2`
