@@ -313,7 +313,7 @@ const Puzzle1 = () => {
       <canvas
         ref={canvasRef}
         width={window.innerWidth}
-        height={window.innerHeight - 50}
+        height={window.innerHeight - 200}
         onMouseDown={(e) => {
           const rect = canvasRef.current.getBoundingClientRect();
           const mouseX = e.clientX - rect.left;
