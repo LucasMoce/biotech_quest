@@ -16,13 +16,25 @@ function App() {
     setPontos(pontos + pp);
   };
 
+  const [puzzleLevelsCheck, setPuzzleLevelsCheck] = useState({
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+    6: false,
+    7: false,
+    8: false,
+    9: false,
+  });
+
   return (
     <div>
       <Navbar pontos={pontos}/>
       <Routes>
           <Route path="/" element={<Home />} />  
           <Route path="/quiz" element={<Quiz aumentarPontos={aumentarPontos}/>} />
-          <Route path="/puzzle/*" element={<PuzzleWrapper aumentarPontos={aumentarPontos} />} />
+          <Route path="/puzzle/*" element={<PuzzleWrapper aumentarPontos={aumentarPontos} puzzleLevelsCheck={puzzleLevelsCheck}/>} />
           <Route path="/DNAGame" element={<DNAGame />} />
       </Routes>
     </div>

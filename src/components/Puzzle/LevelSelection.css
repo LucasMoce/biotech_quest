@@ -19,6 +19,17 @@
   transition: background-color 0.3s;
 }
 
+.level-button[disabled] {
+  /* Estilos para o botão desabilitado */
+  background-color: #dddddd; /* Cor de fundo para desabilitado */
+  color: #666666; /* Cor do texto para desabilitado */
+  cursor: not-allowed; /* Cursor para indicar que o botão está desabilitado */
+}
+
 .level-button:hover {
   background-color: #d84315; 
+}
+
+.level-button[disabled]:hover {
+  background-color: #5c5856; 
 }

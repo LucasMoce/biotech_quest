@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './LevelSelection.css';
 
-const LevelSelection = () => {
+const LevelSelection = ({puzzleLevelsCheck}) => {
+  console.log(puzzleLevelsCheck)
   const levels = Array.from({ length: 9 }, (_, index) => index + 1);
+
+  const handleLevelClick = (level) => {
+      window.location.href = `/puzzle/${level}`;
+  };
   
   return (
     <div className="level-container text-center">
@@ -11,11 +16,11 @@ const LevelSelection = () => {
       <div className="level-grid">
         {levels.map(level => (
           <Link
-            key={level}
-            to={`/puzzle/${level}`}
-            className="level-button"
+          className="level-button"
+          to={`/puzzle/${level}`}
+          disabled={level !== 1 && !puzzleLevelsCheck[level-1]}
           >
-            <h2>Nível {level}</h2>
+          <h2>Nível {level}</h2>
           </Link>
         ))}
       </div>

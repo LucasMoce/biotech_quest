@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom'; // Importa o componente Link para navegação interna
 
 
-const Puzzle1 = ({aumentarPontos}) => {
+const Puzzle1 = ({aumentarPontos, puzzleLevelsCheck}) => {
   const [circleCadeias, setCircleCadeias] = useState([
     [
       { x: 875, y: 100, label: 'X' },
@@ -99,7 +99,11 @@ const Puzzle1 = ({aumentarPontos}) => {
     // Verifica se todos os encaixes estão ocupados e os círculos encaixados têm o rótulo correto
     if (encaixesOcupados && circulosCorretos) {
       setRespostaCorreta(true);
-      {aumentarPontos(10)}} 
+      if  (!puzzleLevelsCheck[9]) {
+        {aumentarPontos(10)}
+        puzzleLevelsCheck[9] = true
+      }
+      } 
     else {
       setRespostaCorreta(false);}
   };
@@ -299,7 +303,7 @@ const Puzzle1 = ({aumentarPontos}) => {
           <h4>Verificar Resposta</h4>
         </button>
 
-        <Link to={nextLvl} className="disabled btn btn-secondary ml-2">
+        <Link to={nextLvl} className={puzzleLevelsCheck[9] ? "btn btn-secondary ml-2" : "disabled btn btn-secondary ml-2"}>
           Próximo Nível
         </Link>
       </div>
