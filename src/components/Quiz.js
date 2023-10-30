@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 
-const Quiz = () => {
+const Quiz = ({aumentarPontos}) => {
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [atualQuestion, setAtualQuestion] = useState(0);
@@ -67,12 +67,20 @@ const Quiz = () => {
       setPontos(pontos + 1);
       if (atualQuestion < quizData.length -1) {
         setAtualQuestion(atualQuestion + 1);
-      } else {setAcabou(true)}
+      } else
+            {
+              {setAcabou(true)}
+              {aumentarPontos(pontos)}
+            } 
     } else {
       if (atualQuestion < quizData.length -1) {
         setAtualQuestion(atualQuestion + 1);
-      } else {setAcabou(true)}
-    }
+      } else 
+            {
+              {setAcabou(true)}
+              {aumentarPontos(pontos)}
+            } 
+     }
   })
 
   return (

@@ -3,9 +3,7 @@ import testeImage from './potion.png'
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import trofeu from './trofeu.png';
 
-const Navbar = () => {
-
-  const [pontos, setPontos] = useState(0);
+const Navbar = ({pontos}) => {
 
   return (
     <div>
