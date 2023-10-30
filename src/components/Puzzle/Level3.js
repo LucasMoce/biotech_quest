@@ -5,32 +5,49 @@ import { Link } from 'react-router-dom'; // Importa o componente Link para naveg
 const Puzzle1 = () => {
   const [circleCadeias, setCircleCadeias] = useState([
     [
-      { x: 875, y: 100, label: 'X' },
-      { x: 975, y: 100, label: 'X' },
+      { x: 875, y: 100, label: 'C' },
+      { x: 975, y: 100, label: 'G' },
     ],
     [
-      { x: 775, y: 175, label: 'X' },
-      { x: 875, y: 175, label: 'X' },
-      { x: 975, y: 175, label: 'X' },
-      { x: 1075, y: 175, label: 'X' },
+      { x: 775, y: 175, label: 'G' },
+      { x: 875, y: 175, label: 'T' },
+      { x: 975, y: 175, label: 'G' },
+      { x: 1075, y: 175, label: 'A' },
     ],
     [
-      { x: 825, y: 400, label: 'X' },
-      { x: 925, y: 400, label: 'X' },
-      { x: 1025, y: 400, label: 'X' },
+      { x: 775, y: 250, label: 'A' },
+      { x: 875, y: 250, label: 'T' },
+      { x: 975, y: 250, label: 'C' },
+      { x: 1075, y: 250, label: 'G' },
+    ],
+    [
+      { x: 775, y: 325, label: 'G' },
+      { x: 875, y: 325, label: 'A' },
+      { x: 975, y: 325, label: 'T' },
+      { x: 1075, y: 325, label: 'C' },
+    ],
+    [
+      { x: 675, y: 400, label: 'A' },
+      { x: 775, y: 400, label: 'T' },
+      { x: 875, y: 400, label: 'C' },
+    ],
+    [
+      { x: 975, y: 400, label: 'C' },
+      { x: 1075, y: 400, label: 'G' },
+      { x: 1175, y: 400, label: 'A' },
     ],
   ]);
 
   const encaixes = [
-    { x: 525, y: 550, label: 'X' },
-    { x: 625, y: 550, label: 'X' },
-    { x: 725, y: 550, label: 'X' },
-    { x: 825, y: 550, label: 'X' },
-    { x: 925, y: 550, label: 'X' },
-    { x: 1025, y: 550, label: 'X' },
-    { x: 1125, y: 550, label: 'X' },
-    { x: 1225, y: 550, label: 'X' },
-    { x: 1325, y: 550, label: 'X' },
+    { x: 525, y: 550, label: 'C' },
+    { x: 625, y: 550, label: 'G' },
+    { x: 725, y: 550, label: 'A' },
+    { x: 825, y: 550, label: 'T' },
+    { x: 925, y: 550, label: 'C' },
+    { x: 1025, y: 550, label: 'G' },
+    { x: 1125, y: 550, label: 'T' },
+    { x: 1225, y: 550, label: 'G' },
+    { x: 1325, y: 550, label: 'A' },
   ];
 
   const complementPairs = {
@@ -49,7 +66,7 @@ const Puzzle1 = () => {
   const cor = {
     linha: '#d4d4d4',
     letra: '#000000',
-    resposta: '#fc3a3a',
+    resposta: '#d4d4d4',
     encaixe: '#d4d4d4',
   }
   const nextLvl = `/puzzle/4`
