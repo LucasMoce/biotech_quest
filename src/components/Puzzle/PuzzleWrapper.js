@@ -11,12 +11,12 @@ import Level7 from './Level7';
 import Level8 from './Level8';
 import Level9 from './Level9';
 
-const PuzzleWrapper = () => {
+const PuzzleWrapper = ({aumentarPontos}) => {
 
   return (
     <Routes>
       <Route path="/" element={<LevelSelection />} />
-      <Route path={"/1"} element={<Level1 />} />
+      <Route path={"/1"} element={<Level1 aumentarPontos={aumentarPontos} />} />
       <Route path={"/2"} element={<Level2 />} />
       <Route path={"/3"} element={<Level3 />} />
       <Route path={"/4"} element={<Level4 />} />

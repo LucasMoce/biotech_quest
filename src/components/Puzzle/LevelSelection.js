@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './LevelSelection.css';
 
 const LevelSelection = () => {
   const levels = Array.from({ length: 9 }, (_, index) => index + 1);
-
+  
   return (
     <div className="level-container text-center">
       <h1>Selecione um Nível</h1>

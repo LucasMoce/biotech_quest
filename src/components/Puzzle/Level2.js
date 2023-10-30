@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom'; // Importa o componente Link para navegação interna
 
 
-const Puzzle1 = () => {
+const Puzzle1 = ({aumentarPontos}) => {
   const [circleCadeias, setCircleCadeias] = useState([
     [
       { x: 875, y: 100, label: 'C' },
@@ -109,7 +109,9 @@ const Puzzle1 = () => {
   
     // Verifica se todos os encaixes estão ocupados e os círculos encaixados têm o rótulo correto
     if (encaixesOcupados && circulosCorretos) {
-      setRespostaCorreta(true);} 
+      setRespostaCorreta(true);
+      {aumentarPontos(10)}} 
+      
     else {
       setRespostaCorreta(false);}
   };
@@ -324,7 +326,7 @@ const Puzzle1 = () => {
       <canvas
         ref={canvasRef}
         width={window.innerWidth}
-        height={window.innerHeight - 200}
+        height={window.innerHeight - 100}
         onMouseDown={(e) => {
           const rect = canvasRef.current.getBoundingClientRect();
           const mouseX = e.clientX - rect.left;

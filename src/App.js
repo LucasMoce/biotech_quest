@@ -22,7 +22,7 @@ function App() {
       <Routes>
           <Route path="/" element={<Home />} />  
           <Route path="/quiz" element={<Quiz aumentarPontos={aumentarPontos}/>} />
-          <Route path="/puzzle/*" element={<PuzzleWrapper />} />
+          <Route path="/puzzle/*" element={<PuzzleWrapper aumentarPontos={aumentarPontos} />} />
           <Route path="/DNAGame" element={<DNAGame />} />
       </Routes>
     </div>
