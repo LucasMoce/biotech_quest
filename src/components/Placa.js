@@ -119,6 +119,7 @@ const Placa = () => {
 
   const handleNextLevel = () => {
     //Ir para o próximo nivel
+    window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley';
   };
   
 
