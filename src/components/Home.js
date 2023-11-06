@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, useMatch, useResolvedPath, } from "react-router-dom";
 import quiz from './quiz.png';
 import puzzle from './puzzle.png';
+import conte from './conte.png';
 
 const Home = () => {
   return (
@@ -15,9 +16,10 @@ const Home = () => {
                         </Link>
                     </div>
                     <br />
-                    <div className="border border-dark border-3 position-relative rounded" style={{backgroundColor:`darkred`, height:`200px`}}>
-                        <h2 className='text-light position-absolute top-50 start-50 translate-middle'>Arrume o DNA</h2>
-                        <button className='btn btn-light position-absolute bottom-0 start-50 translate-middle'><Link to="/DNAGame" className="nav-link">Iniciar</Link></button>
+                    <div className="border border-dark border-3 position-relative rounded" style={{height:`200px`}}>
+                        <Link to="/placa" className="nav-link">
+                        <img src={conte} alt="" />
+                        </Link>
                     </div>
                 </div>
                 <div className='col me-5'>

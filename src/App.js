@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Quiz from './components/Quiz';
 import PuzzleWrapper from './components/Puzzle/PuzzleWrapper';
 import DNAGame from './components/DNAGame';
+import Placa from './components/Placa';
 import { Route, Routes } from "react-router-dom";
 import { useState } from 'react'
 
@@ -36,6 +37,7 @@ function App() {
           <Route path="/quiz" element={<Quiz aumentarPontos={aumentarPontos}/>} />
           <Route path="/puzzle/*" element={<PuzzleWrapper aumentarPontos={aumentarPontos} puzzleLevelsCheck={puzzleLevelsCheck}/>} />
           <Route path="/DNAGame" element={<DNAGame />} />
+          <Route path="/placa" element={<Placa />} />  
       </Routes>
     </div>
   );
