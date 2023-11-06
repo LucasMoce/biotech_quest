@@ -18,6 +18,58 @@ const App = () => {
   const appleSymbols = ['A', 'T', 'C', 'G'];
 
 
+  const generateFixedLengthSequence = () => {
+    const possibleLetters = ["A", "C", "T", "G"];
+    const sequenceLength = 10; // Sempre terá 10 caracteres
+  
+    const sequence = [];
+    for (let i = 0; i < sequenceLength; i++) {
+      const randomIndex = Math.floor(Math.random() * possibleLetters.length);
+      const randomLetter = possibleLetters[randomIndex];
+      sequence.push(randomLetter);
+    }
+  
+    return sequence.join("");
+  };
+
+  const generateComplementarySequence = (sequence) => {
+    const complementarySequence = [];
+    for (let i = 0; i < sequence.length; i++) {
+      const nucleotide = sequence[i];
+      let complement;
+  
+      if (nucleotide === "A") {
+        complement = "T";
+      } else if (nucleotide === "T") {
+        complement = "A";
+      } else if (nucleotide === "C") {
+        complement = "G";
+      } else if (nucleotide === "G") {
+        complement = "C";
+      } else {
+        // Handle invalid nucleotides here
+        complement = "?"; // Use "?" for unknown nucleotides
+      }
+  
+      complementarySequence.push(complement);
+    }
+  
+    return complementarySequence.join("");
+  };
+
+  const displaySequence = () => {
+    const sequenceDiv = document.getElementById("sequence-display");
+    const randomSequence = generateFixedLengthSequence();
+    const complementarySequence = generateComplementarySequence(randomSequence);
+  
+    sequenceDiv.textContent = "Sequence: " + randomSequence;
+    sequenceDiv.textContent += "\nComplementary: " + complementarySequence;
+  };
+  
+
+  
+  
+
   useInterval(() => gameLoop(), speed);
 
   const endGame = () => {
@@ -45,10 +97,7 @@ const App = () => {
         newApples.push(generateUniqueApple());
       }
       return newApples;
-    };
-    
-    
-
+    };            
 
   const checkCollision = (piece, snk = snake) => {
     if (
@@ -115,7 +164,7 @@ const App = () => {
     context.fillStyle = "pink";
     snake.forEach(([x, y]) => context.fillRect(x, y, 1, 1));
   
-    context.font = "1px Arial"; // Defina o tamanho e a fonte da letra
+    context.font = "1px Arial"; // Ajuste o tamanho da fonte para 10px
     context.textAlign = "center";
     context.textBaseline = "middle";
   
@@ -125,9 +174,12 @@ const App = () => {
       context.fillStyle = "black";
       context.fillText(appleSymbols[index], x + 0.5, y + 0.5);
     });
+    
   }, [snake, apples, gameOver, appleSymbols]);
   
-
+useEffect(() =>{
+  displaySequence();
+}, []);
 
   return (
     <div role="button" tabIndex="0" onKeyDown={e => moveSnake(e)}>
@@ -137,10 +189,11 @@ const App = () => {
         width={`${CANVAS_SIZE[0]}px`}
         height={`${CANVAS_SIZE[1]}px`}
       />
+      <div id="sequence-display" style={{ textAlign: "center" }}></div>
       {gameOver && <div>GAME OVER!</div>}
       <button onClick={startGame}>Start Game</button>
     </div>
   );
 };
 
-export default App;
+export default App
