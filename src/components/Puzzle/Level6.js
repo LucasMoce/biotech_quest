@@ -318,7 +318,7 @@ const Puzzle1 = ({aumentarPontos, puzzleLevelsCheck}) => {
       <canvas
         ref={canvasRef}
         width={window.innerWidth}
-        height={window.innerHeight - 100}
+        height={window.innerHeight}
         onMouseDown={(e) => {
           const rect = canvasRef.current.getBoundingClientRect();
           const mouseX = e.clientX - rect.left;
