@@ -4,11 +4,11 @@ import Cards from './Components/Cards'
 
 
 function App() {
- 
+
 
   return (
     <div className="App">
-      <h1>Game of thrones</h1>
+      <h1>Organelas</h1>
       <Cards />
     </div>
   );
